@@ -1,21 +1,17 @@
-from data import data
-from lut import lut
+from FLAG_DATA import data as FLAG_DATA
+from LUT_data import lut as LUT_DATA
 
-lut_d = {}
-
-lut = lut.split("\n")
-
+lut_lines = LUT_DATA.split("\n")
 lut_entries = []
-for elem in lut:
+for elem in lut_lines:
     parts = elem.split(":")
     lut_entries.append((int(parts[0]), parts[1].lower()))
 
 lut_d = {int(v, 16): chr(k) for k, v in lut_entries}
 
 flag = ""
-
-for i in data:
-    s = i.lower()
+for item in FLAG_DATA:
+    s = item.lower()
     key = int(s, 16)
     if key in lut_d:
         ch = lut_d[key]
@@ -26,7 +22,7 @@ for i in data:
                 ch = chr(k)
                 break
         if ch is None:
-            raise KeyError(f"No mapping for {i}")
+            raise KeyError(f"No mapping for {item}")
     flag += ch
 
-print(flag)
+print(f"Generating Flag...\nFlag =\t\" {flag} \"")
